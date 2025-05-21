@@ -36,7 +36,7 @@ function AuthProvider(props) {
       }),
     [oAuthUser],
   );
-  const fbUser = null; // adding this line solely to clear an error so I can push to github!! remove before using
+
   if (fbUser) {
     setUser(fbUser);
     setOAuthUser(fbUser);
