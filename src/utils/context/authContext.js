@@ -21,17 +21,12 @@ function AuthProvider(props) {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((fbUser) => {
-      console.warn(fbUser);
       if (fbUser) {
         setOAuthUser(fbUser);
         checkUser(fbUser.uid).then((gamerInfo) => {
           console.warn(gamerInfo);
           let userObj = {};
-          // if ('valid' in gamerInfo) {
-          //   userObj = gamerInfo;
-          // } else {
           userObj = { fbUser, uid: fbUser.uid, ...gamerInfo };
-          // }
           setUser(userObj);
         });
       } else {
