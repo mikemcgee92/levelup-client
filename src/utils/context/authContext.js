@@ -24,7 +24,6 @@ function AuthProvider(props) {
       if (fbUser) {
         setOAuthUser(fbUser);
         checkUser(fbUser.uid).then((gamerInfo) => {
-          console.warn(gamerInfo);
           let userObj = {};
           userObj = { fbUser, uid: fbUser.uid, ...gamerInfo };
           setUser(userObj);
