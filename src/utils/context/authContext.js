@@ -22,8 +22,15 @@ function AuthProvider(props) {
   useEffect(() => {
     firebase.auth().onAuthStateChanged((fbUser) => {
       if (fbUser) {
-        setUser(fbUser);
+        setOAuthUser(fbUser);
+        checkUser(fbUser.uid).then((gamerInfo) => {
+          console.warn(gamerInfo);
+          let userObj = {};
+          userObj = { fbUser, uid: fbUser.uid, ...gamerInfo };
+          setUser(userObj);
+        });
       } else {
+        setOAuthUser(false);
         setUser(false);
       }
     }); // creates a single global listener for auth state changed
@@ -36,23 +43,6 @@ function AuthProvider(props) {
       }),
     [oAuthUser],
   );
-
-  if (fbUser) {
-    setUser(fbUser);
-    setOAuthUser(fbUser);
-    checkUser(fbUser.uid).then((gamerInfo) => {
-      let userObj = {};
-      if ('valid' in gamerInfo) {
-        userObj = gamerInfo;
-      } else {
-        userObj = { fbUser, uid: fbUser.uid, ...gamerInfo };
-      }
-      setUser(userObj);
-    });
-  } else {
-    setOAuthUser(false);
-    setUser(false);
-  }
 
   const value = useMemo(
     // https://reactjs.org/docs/hooks-reference.html#usememo
