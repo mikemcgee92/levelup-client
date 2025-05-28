@@ -21,6 +21,9 @@ export default function NavBar() {
             <Link className="nav-link" href="/games">
               Games
             </Link>
+            <Link className="nav-link" href="/events">
+              Events
+            </Link>
           </Nav>
 
           <Button variant="danger" onClick={signOut}>
