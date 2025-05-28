@@ -2,7 +2,6 @@ import GameForm from '../../components/game/GameForm';
 import { useAuth } from '../../utils/context/authContext';
 
 function NewGame() {
-  console.warn(useAuth());
   const { user } = useAuth();
   return (
     <div>

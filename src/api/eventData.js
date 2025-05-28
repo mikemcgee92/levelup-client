@@ -8,5 +8,16 @@ const getEvents = () =>
       .catch(reject);
   });
 
-// eslint-disable-next-line import/prefer-default-export
-export { getEvents };
+const createEvent = async (event) => {
+  const post = await fetch(`${clientCredentials.databaseURL}/events`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(event),
+  });
+  const response = post.json();
+  return response;
+};
+
+export { getEvents, createEvent };
