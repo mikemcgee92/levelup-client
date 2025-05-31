@@ -21,10 +21,6 @@ function GameForm({ user }) {
   const [currentGame, setCurrentGame] = useState(initialState);
   const router = useRouter();
 
-  useEffect(() => {
-    getGameTypes().then(setGameTypes);
-  }, []);
-
   const loadGameData = () => {
     const url = window.location.href;
     if (url.includes('edit/')) {
@@ -36,6 +32,10 @@ function GameForm({ user }) {
       });
     }
   };
+
+  useEffect(() => {
+    getGameTypes().then(setGameTypes);
+  }, []);
 
   useEffect(() => {
     loadGameData();

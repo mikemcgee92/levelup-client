@@ -27,8 +27,13 @@ function Home() {
         <section key={`game--${game.id}`} className="game">
           <GameCard title={game.title} maker={game.maker} numberOfPlayers={game.number_of_players} skillLevel={game.skill_level} />
           <Link href={`games/edit/${game.id}`} passHref>
-            Edit
+            Edit {game.title}
           </Link>
+          <br />
+          <Link href={`games/${game.id}`} passHref>
+            View {game.title}
+          </Link>
+          <br />
         </section>
       ))}
     </article>

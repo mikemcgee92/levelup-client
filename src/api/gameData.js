@@ -39,6 +39,7 @@ const updateGame = async (game, id) => {
     },
     body: JSON.stringify(game),
   });
+  // backend returns None so no need to return data here as it will cause errors
 };
 
 const getGameTypes = () =>
