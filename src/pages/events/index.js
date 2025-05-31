@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { Button } from 'react-bootstrap';
 import EventCard from '../../components/event/EventCard';
 import { getEvents } from '../../api/eventData';
@@ -25,6 +26,14 @@ function Home() {
       {events.map((event) => (
         <section key={`event--${event.id}`} className="event">
           <EventCard description={event.description} date={event.date} time={event.time} />
+          <Link href={`events/edit/${event.id}`} passHref>
+            Edit {event.description}
+          </Link>
+          <br />
+          <Link href={`events/${event.id}`} passHref>
+            View {event.description}
+          </Link>
+          <br />
         </section>
       ))}
     </article>

@@ -8,6 +8,17 @@ const getEvents = () =>
       .catch(reject);
   });
 
+const getSingleEvent = async (id) => {
+  const get = await fetch(`${clientCredentials.databaseURL}/events/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const response = get.json();
+  return response;
+};
+
 const createEvent = async (event) => {
   const post = await fetch(`${clientCredentials.databaseURL}/events`, {
     method: 'POST',
@@ -20,4 +31,15 @@ const createEvent = async (event) => {
   return response;
 };
 
-export { getEvents, createEvent };
+const updateEvent = async (event, id) => {
+  await fetch(`${clientCredentials.databaseURL}/events/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(event),
+  });
+  // backend returns None so no need to return data here as it will cause errors
+};
+
+export { getEvents, createEvent, getSingleEvent, updateEvent };
