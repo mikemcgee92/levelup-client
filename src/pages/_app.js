@@ -1,12 +1,15 @@
 // src/pages/_app.js
 import PropTypes from 'prop-types';
 import { AuthProvider } from '../utils/context/authContext';
+import ViewDirectorBasedOnUserAuthStatus from '../utils/context/ViewDirector';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function AppContext({ Component, pageProps }) {
   return (
     <AuthProvider>
-      <Component {...pageProps} />
+      <ViewDirectorBasedOnUserAuthStatus>
+        <Component {...pageProps} />
+      </ViewDirectorBasedOnUserAuthStatus>
     </AuthProvider>
   );
 }
@@ -14,6 +17,6 @@ function AppContext({ Component, pageProps }) {
 export default AppContext;
 
 AppContext.propTypes = {
-  Component: PropTypes.shape(),
-  pageProps: PropTypes.arrayOf(),
+  Component: PropTypes.func.isRequired,
+  pageProps: PropTypes.objectOf({}).isRequired,
 };
