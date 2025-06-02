@@ -50,4 +50,14 @@ const getGameTypes = () =>
       .catch(reject);
   });
 
-export { getGames, createGame, getGameTypes, getSingleGame, updateGame };
+const deleteGame = async (id) => {
+  await fetch(`${clientCredentials.databaseURL}/games/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  // 204 no content
+};
+
+export { getGames, createGame, getGameTypes, getSingleGame, updateGame, deleteGame };
