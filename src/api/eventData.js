@@ -42,4 +42,14 @@ const updateEvent = async (event, id) => {
   // backend returns None so no need to return data here as it will cause errors
 };
 
-export { getEvents, createEvent, getSingleEvent, updateEvent };
+const deleteEvent = async (id) => {
+  await fetch(`${clientCredentials.databaseURL}/events/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  // 204 no content
+};
+
+export { getEvents, createEvent, getSingleEvent, updateEvent, deleteEvent };

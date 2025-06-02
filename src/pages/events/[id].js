@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { getSingleEvent } from '../../api/eventData';
+import { Button } from 'react-bootstrap';
+import { useRouter } from 'next/router';
+import { getSingleEvent, deleteEvent } from '../../api/eventData';
 
 export default function ViewEvent() {
   const [eventDetails, setEventDetails] = useState({});
+  const router = useRouter();
 
   const id = window.location.href.split('events/')[1];
 
@@ -18,6 +21,14 @@ export default function ViewEvent() {
         <h3>On {eventDetails.date}</h3>
         <h3>At {eventDetails.time} players</h3>
         <h3>Hosted by {eventDetails.organizer?.bio}</h3>
+        <Button
+          onClick={() => {
+            deleteEvent(eventDetails.id);
+            router.push('/events');
+          }}
+        >
+          Delete
+        </Button>
       </div>
     </div>
   );
