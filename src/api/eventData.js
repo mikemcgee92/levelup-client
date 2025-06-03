@@ -1,8 +1,13 @@
 import { clientCredentials } from '../utils/client';
 
-const getEvents = () =>
+const getEvents = (uid) =>
   new Promise((resolve, reject) => {
-    fetch(`${clientCredentials.databaseURL}/events`)
+    fetch(`${clientCredentials.databaseURL}/events`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `${uid}`,
+      },
+    })
       .then((response) => response.json())
       .then(resolve)
       .catch(reject);
@@ -52,4 +57,26 @@ const deleteEvent = async (id) => {
   // 204 no content
 };
 
-export { getEvents, createEvent, getSingleEvent, updateEvent, deleteEvent };
+const joinEvent = async (eventId, uid) => {
+  await fetch(`${clientCredentials.databaseURL}/events/${eventId}/signup`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `${uid}`,
+    },
+  });
+  // 201 created
+};
+
+const leaveEvent = async (eventId, uid) => {
+  await fetch(`${clientCredentials.databaseURL}/events/${eventId}/leave`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `${uid}`,
+    },
+  });
+  // 204 no content
+};
+
+export { getEvents, createEvent, getSingleEvent, updateEvent, deleteEvent, leaveEvent, joinEvent };
