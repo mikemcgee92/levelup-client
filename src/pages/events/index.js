@@ -3,15 +3,17 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { Button } from 'react-bootstrap';
 import EventCard from '../../components/event/EventCard';
-import { getEvents } from '../../api/eventData';
+import { getEvents, joinEvent, leaveEvent } from '../../api/eventData';
+import { useAuth } from '../../utils/context/authContext';
 
 function Home() {
   const [events, setEvents] = useState([]);
   const router = useRouter();
+  const { user } = useAuth();
 
   useEffect(() => {
-    getEvents().then((data) => setEvents(data));
-  }, []);
+    getEvents(user.uid).then((data) => setEvents(data));
+  }, [user.uid]);
 
   return (
     <article className="events">
@@ -33,7 +35,28 @@ function Home() {
           <Link href={`events/${event.id}`} passHref>
             View {event.description}
           </Link>
-          <br />
+          <br />{' '}
+          {event.joined ? (
+            <Button
+              onClick={() => {
+                leaveEvent(event.id, user.uid)
+                  .then(() => getEvents(user.uid))
+                  .then((data) => setEvents(data));
+              }}
+            >
+              Leave
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                joinEvent(event.id, user.uid)
+                  .then(() => getEvents(user.uid))
+                  .then((data) => setEvents(data));
+              }}
+            >
+              Join
+            </Button>
+          )}
         </section>
       ))}
     </article>
